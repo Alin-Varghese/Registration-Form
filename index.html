@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Registration Form</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+}
+
+.container{
+    width:420px;
+    padding:30px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    color:white;
+}
+
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+    outline:none;
+}
+
+.success{
+    border-color:green;
+}
+
+.error{
+    border-color:red;
+}
+
+.message{
+    font-size:14px;
+    margin-top:5px;
+}
+
+.success-msg{
+    color:#00ff88;
+}
+
+.error-msg{
+    color:#ff6b6b;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#00c896;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#00a67d;
+}
+
+#finalMessage{
+    margin-top:15px;
+    text-align:center;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📝 Registration Form</h1>
+
+<div class="input-group">
+    <input type="text" id="name" placeholder="Enter Name">
+    <div id="nameMsg" class="message"></div>
+</div>
+
+<div class="input-group">
+    <input type="text" id="email" placeholder="Enter Email">
+    <div id="emailMsg" class="message"></div>
+</div>
+
+<div class="input-group">
+    <input type="text" id="phone" placeholder="Enter Phone Number">
+    <div id="phoneMsg" class="message"></div>
+</div>
+
+<div class="input-group">
+    <input type="password" id="password" placeholder="Enter Password">
+    <div id="passwordMsg" class="message"></div>
+</div>
+
+<button onclick="submitForm()">Register</button>
+
+<div id="finalMessage"></div>
+
+</div>
+
+<script>
+
+const nameField=document.getElementById("name");
+const emailField=document.getElementById("email");
+const phoneField=document.getElementById("phone");
+const passwordField=document.getElementById("password");
+
+nameField.addEventListener("input",validateName);
+emailField.addEventListener("input",validateEmail);
+phoneField.addEventListener("input",validatePhone);
+passwordField.addEventListener("input",validatePassword);
+
+function validateName(){
+
+    let regex=/^[A-Za-z ]{3,}$/;
+
+    if(regex.test(nameField.value)){
+        setSuccess(nameField,"nameMsg","Valid Name");
+        return true;
+    }
+
+    setError(nameField,"nameMsg",
+    "Minimum 3 letters required");
+    return false;
+}
+
+function validateEmail(){
+
+    let regex=/^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+    if(regex.test(emailField.value)){
+        setSuccess(emailField,"emailMsg",
+        "Valid Email");
+        return true;
+    }
+
+    setError(emailField,"emailMsg",
+    "Invalid Email");
+    return false;
+}
+
+function validatePhone(){
+
+    let regex=/^[0-9]{10}$/;
+
+    if(regex.test(phoneField.value)){
+        setSuccess(phoneField,"phoneMsg",
+        "Valid Phone Number");
+        return true;
+    }
+
+    setError(phoneField,"phoneMsg",
+    "Must contain 10 digits");
+    return false;
+}
+
+function validatePassword(){
+
+    let regex=
+    /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+
+    if(regex.test(passwordField.value)){
+        setSuccess(passwordField,"passwordMsg",
+        "Strong Password");
+        return true;
+    }
+
+    setError(passwordField,"passwordMsg",
+    "Minimum 6 chars with letter & number");
+    return false;
+}
+
+function setSuccess(input,id,msg){
+
+    input.classList.remove("error");
+    input.classList.add("success");
+
+    document.getElementById(id).innerHTML=msg;
+    document.getElementById(id).className=
+    "message success-msg";
+}
+
+function setError(input,id,msg){
+
+    input.classList.remove("success");
+    input.classList.add("error");
+
+    document.getElementById(id).innerHTML=msg;
+    document.getElementById(id).className=
+    "message error-msg";
+}
+
+function submitForm(){
+
+    if(
+        validateName() &&
+        validateEmail() &&
+        validatePhone() &&
+        validatePassword()
+    ){
+        document.getElementById("finalMessage")
+        .innerHTML="✅ Registration Successful!";
+    }
+    else{
+        document.getElementById("finalMessage")
+        .innerHTML="❌ Please correct the errors.";
+    }
+}
+
+</script>
+
+</body>
+</html>
