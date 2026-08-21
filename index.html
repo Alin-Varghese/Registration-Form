@@ -1,240 +1,293 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Registration Form</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Form</title>
 
-<style>
+    <style>
+        /* ─── Reset ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
+        /* ─── Body with static background ─── */
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #5e72a0;  /* ← Change this to any color you want */
+            padding: 20px;
+        }
 
-body{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#667eea,#764ba2);
-}
+        /* ─── Container (transparent – no box!) ─── */
+        .container {
+            width: 800px;
+            max-width: 100%;
+            padding: 35px 30px;
+            background: transparent;
+            backdrop-filter: none;
+            box-shadow: none;
+            border-radius: 20px;
+            color: white;
+        }
 
-.container{
-    width:420px;
-    padding:30px;
-    background:rgba(255,255,255,0.15);
-    backdrop-filter:blur(10px);
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.3);
-    color:white;
-}
+        /* ─── Title ─── */
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 24px;
+            color: #ffffff;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        }
 
-h1{
-    text-align:center;
-    margin-bottom:20px;
-}
+        /* ─── Input Groups ─── */
+        .input-group {
+            margin-bottom: 16px;
+        }
 
-.input-group{
-    margin-bottom:15px;
-}
+        /* ─── Input Fields ─── */
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid transparent;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(4px);
+            color: #ffffff;
+            outline: none;
+            transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+        }
 
-input{
-    width:100%;
-    padding:12px;
-    border:2px solid #ddd;
-    border-radius:10px;
-    font-size:16px;
-    outline:none;
-}
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 400;
+        }
 
-.success{
-    border-color:green;
-}
+        input:focus {
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.03);
+        }
 
-.error{
-    border-color:red;
-}
+        /* Success state */
+        input.success {
+            border-color: #43e97b;
+            background: rgba(67, 233, 123, 0.08);
+        }
 
-.message{
-    font-size:14px;
-    margin-top:5px;
-}
+        /* Error state */
+        input.error {
+            border-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.08);
+        }
 
-.success-msg{
-    color:#00ff88;
-}
+        /* ─── Messages ─── */
+        .message {
+            font-size: 13px;
+            margin-top: 6px;
+            padding-left: 4px;
+            font-weight: 500;
+        }
 
-.error-msg{
-    color:#ff6b6b;
-}
+        .success-msg {
+            color: #43e97b;
+        }
 
-button{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:10px;
-    background:#00c896;
-    color:white;
-    font-size:18px;
-    cursor:pointer;
-}
+        .error-msg {
+            color: #ff6b6b;
+        }
 
-button:hover{
-    background:#00a67d;
-}
+        /* ─── Button ─── */
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: #1a1a2e;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 4px;
+            transition: transform 0.2s ease, box-shadow 0.25s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 30px rgba(67, 233, 123, 0.20);
+        }
 
-#finalMessage{
-    margin-top:15px;
-    text-align:center;
-    font-weight:bold;
-}
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(67, 233, 123, 0.35);
+        }
 
-</style>
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* ─── Final Message ─── */
+        #finalMessage {
+            margin-top: 18px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        #finalMessage.success-msg {
+            color: #43e97b;
+            background: rgba(67, 233, 123, 0.06);
+        }
+
+        #finalMessage.error-msg {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.06);
+        }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 480px) {
+            .container {
+                padding: 24px 16px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+            input {
+                padding: 12px 14px;
+                font-size: 15px;
+            }
+            button {
+                font-size: 16px;
+                padding: 13px;
+            }
+            #finalMessage {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+    <div class="container">
+        <h1>Registration Form</h1>
 
-<h1>📝 Registration Form</h1>
+        <div class="input-group">
+            <input type="text" id="name" placeholder="Enter Name" />
+            <div id="nameMsg" class="message"></div>
+        </div>
 
-<div class="input-group">
-    <input type="text" id="name" placeholder="Enter Name">
-    <div id="nameMsg" class="message"></div>
-</div>
+        <div class="input-group">
+            <input type="text" id="email" placeholder="Enter Email" />
+            <div id="emailMsg" class="message"></div>
+        </div>
 
-<div class="input-group">
-    <input type="text" id="email" placeholder="Enter Email">
-    <div id="emailMsg" class="message"></div>
-</div>
+        <div class="input-group">
+            <input type="text" id="phone" placeholder="Enter Phone Number" />
+            <div id="phoneMsg" class="message"></div>
+        </div>
 
-<div class="input-group">
-    <input type="text" id="phone" placeholder="Enter Phone Number">
-    <div id="phoneMsg" class="message"></div>
-</div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder="Enter Password" />
+            <div id="passwordMsg" class="message"></div>
+        </div>
 
-<div class="input-group">
-    <input type="password" id="password" placeholder="Enter Password">
-    <div id="passwordMsg" class="message"></div>
-</div>
+        <button onclick="submitForm()">Register</button>
 
-<button onclick="submitForm()">Register</button>
+        <div id="finalMessage"></div>
+    </div>
 
-<div id="finalMessage"></div>
+    <script>
+        const nameField = document.getElementById("name");
+        const emailField = document.getElementById("email");
+        const phoneField = document.getElementById("phone");
+        const passwordField = document.getElementById("password");
 
-</div>
+        nameField.addEventListener("input", validateName);
+        emailField.addEventListener("input", validateEmail);
+        phoneField.addEventListener("input", validatePhone);
+        passwordField.addEventListener("input", validatePassword);
 
-<script>
+        function validateName() {
+            const regex = /^[A-Za-z ]{3,}$/;
+            if (regex.test(nameField.value)) {
+                setSuccess(nameField, "nameMsg", "Valid Name");
+                return true;
+            }
+            setError(nameField, "nameMsg", "Minimum 3 letters required");
+            return false;
+        }
 
-const nameField=document.getElementById("name");
-const emailField=document.getElementById("email");
-const phoneField=document.getElementById("phone");
-const passwordField=document.getElementById("password");
+        function validateEmail() {
+            const regex = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (regex.test(emailField.value)) {
+                setSuccess(emailField, "emailMsg", "Valid Email");
+                return true;
+            }
+            setError(emailField, "emailMsg", "Invalid Email");
+            return false;
+        }
 
-nameField.addEventListener("input",validateName);
-emailField.addEventListener("input",validateEmail);
-phoneField.addEventListener("input",validatePhone);
-passwordField.addEventListener("input",validatePassword);
+        function validatePhone() {
+            const regex = /^[0-9]{10}$/;
+            if (regex.test(phoneField.value)) {
+                setSuccess(phoneField, "phoneMsg", "Valid Phone Number");
+                return true;
+            }
+            setError(phoneField, "phoneMsg", "Must contain 10 digits");
+            return false;
+        }
 
-function validateName(){
+        function validatePassword() {
+            const regex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+            if (regex.test(passwordField.value)) {
+                setSuccess(passwordField, "passwordMsg", "Strong Password");
+                return true;
+            }
+            setError(passwordField, "passwordMsg", "Minimum 6 chars with letter & number");
+            return false;
+        }
 
-    let regex=/^[A-Za-z ]{3,}$/;
+        function setSuccess(input, id, msg) {
+            input.classList.remove("error");
+            input.classList.add("success");
+            const el = document.getElementById(id);
+            el.innerHTML = msg;
+            el.className = "message success-msg";
+        }
 
-    if(regex.test(nameField.value)){
-        setSuccess(nameField,"nameMsg","Valid Name");
-        return true;
-    }
+        function setError(input, id, msg) {
+            input.classList.remove("success");
+            input.classList.add("error");
+            const el = document.getElementById(id);
+            el.innerHTML = msg;
+            el.className = "message error-msg";
+        }
 
-    setError(nameField,"nameMsg",
-    "Minimum 3 letters required");
-    return false;
-}
-
-function validateEmail(){
-
-    let regex=/^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-
-    if(regex.test(emailField.value)){
-        setSuccess(emailField,"emailMsg",
-        "Valid Email");
-        return true;
-    }
-
-    setError(emailField,"emailMsg",
-    "Invalid Email");
-    return false;
-}
-
-function validatePhone(){
-
-    let regex=/^[0-9]{10}$/;
-
-    if(regex.test(phoneField.value)){
-        setSuccess(phoneField,"phoneMsg",
-        "Valid Phone Number");
-        return true;
-    }
-
-    setError(phoneField,"phoneMsg",
-    "Must contain 10 digits");
-    return false;
-}
-
-function validatePassword(){
-
-    let regex=
-    /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
-
-    if(regex.test(passwordField.value)){
-        setSuccess(passwordField,"passwordMsg",
-        "Strong Password");
-        return true;
-    }
-
-    setError(passwordField,"passwordMsg",
-    "Minimum 6 chars with letter & number");
-    return false;
-}
-
-function setSuccess(input,id,msg){
-
-    input.classList.remove("error");
-    input.classList.add("success");
-
-    document.getElementById(id).innerHTML=msg;
-    document.getElementById(id).className=
-    "message success-msg";
-}
-
-function setError(input,id,msg){
-
-    input.classList.remove("success");
-    input.classList.add("error");
-
-    document.getElementById(id).innerHTML=msg;
-    document.getElementById(id).className=
-    "message error-msg";
-}
-
-function submitForm(){
-
-    if(
-        validateName() &&
-        validateEmail() &&
-        validatePhone() &&
-        validatePassword()
-    ){
-        document.getElementById("finalMessage")
-        .innerHTML="✅ Registration Successful!";
-    }
-    else{
-        document.getElementById("finalMessage")
-        .innerHTML="❌ Please correct the errors.";
-    }
-}
-
-</script>
+        function submitForm() {
+            const finalMsg = document.getElementById("finalMessage");
+            if (
+                validateName() &&
+                validateEmail() &&
+                validatePhone() &&
+                validatePassword()
+            ) {
+                finalMsg.innerHTML = "Registration Successful!";
+                finalMsg.className = "success-msg";
+            } else {
+                finalMsg.innerHTML = "Please correct the errors above.";
+                finalMsg.className = "error-msg";
+            }
+        }
+    </script>
 
 </body>
 </html>
